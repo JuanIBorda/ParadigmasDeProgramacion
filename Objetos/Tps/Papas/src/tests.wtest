@@ -1,0 +1,39 @@
+import papa.*
+
+test "Costo de produccion de las Papas Buenas"{
+	cosechaPapa.cantidad(10)
+	cosechaPapa.esCosechaBuena()
+	assert.equals(30,cosechaPapa.costoDeProduccion())
+	}
+
+test "Costo de produccion de las Papas Regulares con cotizacion"{
+	pepe.cotizacion(5)
+	cosechaPapa.cantidad(10)
+	cosechaPapa.esCosechaRegular()
+	assert.equals(50,cosechaPapa.costoDeProduccion())
+	}
+	
+test "Costo de produccion de las Papas Regulares sin cotizacion"{
+	cosechaPapa.cantidad(10)
+	cosechaPapa.esCosechaRegular()
+	assert.equals(0,cosechaPapa.costoDeProduccion())}
+	
+test "Costo de produccion de las Papas Premium"{
+	cosechaPapa.cantidad(10)
+	cosechaPapa.esCosechaPremium()
+	assert.equals(45,cosechaPapa.costoDeProduccion())
+}
+
+// -------- B ------------
+
+test "Cálculo del importe total" {
+	pepe.cotizacion(10)
+	cosechaPapa.cantidad(100)
+	cosechaPapa.esCosechaRegular()
+	cosechaPapa.calcularImpuesto(impuestoConGarantia)
+	cosechaPapa.calcularRetencion(estatista)
+	assert.equals(1400,cosechaPapa.importeTotal())
+}
+
+
+

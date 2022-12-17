@@ -1,0 +1,28 @@
+import example.*
+
+test "Cuando homero come se resta una dona" {
+	homero.comprar()
+	homero.comer()
+	assert.equals(11,homero.cantDonas())
+}
+
+test "homero esta distraido con pocas donas"{
+	assert.that(homero.estaDistraido())
+}
+
+test "homero no esta distraido con muchas donas"{
+	homero.comprar()
+	assert.notThat(homero.estaDistraido())
+}
+
+test "planta en peligro con mucho uranio y encargado distraido" {
+	plantaNuclear.comprarUranio(99999999)
+	assert.that(plantaNuclear.estaEnPeligro())
+}
+test "planta en peligro con encargado distraido" {
+	assert.notThat(plantaNuclear.estaEnPeligro())
+}
+test "planta segura" {
+	homero.comprar()
+	assert.notThat(plantaNuclear.estaEnPeligro())
+}

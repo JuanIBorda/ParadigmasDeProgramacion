@@ -1,0 +1,48 @@
+import example.*
+// --------Personajes--------
+const personaje1 = new Arquero(copas=10, agilidad = 20, rango = 150)	// No cumple condicion minima misionIndividual
+const personaje2 = new Guerrera(copas=20, fuerza = 400, estrategia = true)	//Cumple condicion minima para mision individual con estrategia
+const personaje3 = new Guerrera(copas = 20, fuerza = 5, estrategia = false) //Cumple condicion minima para mision individual sin estrategia
+
+// --------Boost--------
+const boost5 = new Boost(multiplicador = 5)
+
+// --------Misiones--------
+const misionFacilComun = new MisionIndividual(dificultad = 25, tipoDeMision = comun)
+const misionFacilBoost5 = new MisionIndividual(dificultad = 25, tipoDeMision = boost5)
+const misionFacilBonus = new MisionIndividual(dificultad = 25, tipoDeMision = bonus)
+const misionDificilComun = new MisionIndividual(dificultad = 1000, tipoDeMision = comun)
+
+// --------Equipos--------
+const equipo = [personaje1,personaje2]
+
+test "Prueba individual no puede ser realizada porque no se cumplen las condiciones iniciales de copas" {
+	assert.throwsExceptionWithMessage("Mision no puede comenzar",{personaje1.jugar(misionDificilComun,equipo)})
+}
+
+test "Prueba individual no puede ser realizada porque no se cumplen las condiciones iniciales de cantidad de jugadores" {
+	assert.throwsExceptionWithMessage("Mision no puede comenzar",{personaje1.jugar(misionDificilComun,[personaje1,personaje2])})
+}
+
+test "Prueba individual comun se realiza y gana las copas correspondientes" {
+	personaje2.jugar(misionFacilComun,[personaje2])
+	assert.equals(70,personaje2.copas())
+
+}
+
+test "Prueba individual boost con multiplicador de 5 se realiza y gana las copas correspondientes" {
+	personaje2.jugar(misionFacilBoost5,[personaje2])
+	assert.equals(270,personaje2.copas())
+
+}
+
+test "Prueba individual bonus se realiza y gana las copas correspondientes" {
+	personaje2.jugar(misionFacilBonus,[personaje2])
+	assert.equals(71,personaje2.copas())
+
+}
+
+test "Prueba individual se realiza y pierde las copas correspondientes" {
+	personaje3.jugar(misionFacilBonus,[personaje3])
+	assert.equals(0,personaje3.copas())
+}

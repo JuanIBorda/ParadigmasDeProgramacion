@@ -1,0 +1,40 @@
+import catar.*
+
+
+/*
+  Un pastelero va a calificar dependiendo de: la cantidad de azucar del postre
+ y el nivelDeseadoDeDulzor deseado por el pastelero.
+ 1.Para los platos de entrada SIEMPRE va a ser 0, ya que 0/ (10 o nivelDeseadoDeDulzor) siempre da 0.
+ 2.Para los platos principales, el valor va a variar dependiendo de la cantidadDeAzucar que tiene (puede ser 0 o mas)
+ 3.Un pastelero no puede calificar un plato si el nivelDeDulzorDeseado es 0 (x/0 exepcion)
+ 4.Para los platos de postre la cantidad de azucar es siempre igual.
+ */
+const nacho = new Cocinero(especialidad = pastelero, nombre = "nacho")
+const pastelero = new Pastelero(nivelDeseadoDeDulzor = 5)
+const exquisito = new Pastelero(nivelDeseadoDeDulzor = 0)
+const alf = new Cocinero(especialidad = exquisito, nombre = "alf")
+
+test "Un pastelero califica a un plato de entrada como 0" {
+	const platoDeEntrada = new PlatoDeEntrada(chef = nacho)
+	assert.equals(0,nacho.catar(platoDeEntrada))
+}
+
+test "Un pastelero con nivelDeDulzorDeseado = 0 puede calificar un plato con 0 azucar" {
+	const platoDeEntrada = new PlatoDeEntrada(chef = nacho)
+	assert.equals(0,nacho.catar(platoDeEntrada))
+}
+
+test "Un pastelero con nivelDeDulzorDeseado = 0 no debe poder calificar un plato con azucar" {
+	const platoPrincipal = new PlatoPrincipal(bonito = true, cantidadDeAzucar = 6, chef = nacho)
+	assert.throwsException({alf.catar(platoPrincipal)})
+}
+
+test "Un pastelero califica a un plato principal con su respectivo puntaje si tiene azucar" {
+	const platoPrincipal = new PlatoPrincipal(bonito = true, cantidadDeAzucar = 5, chef = nacho)
+	assert.equals(5,nacho.catar(platoPrincipal))
+}
+
+test "Un pastelero califica a un plato de postre" {
+	const platoDePostre = new PlatoDePostre(cantidadDeColores = 5, chef = nacho)
+	assert.equals(120,nacho.catar(platoDePostre))
+}
